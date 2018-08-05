@@ -43,42 +43,103 @@ public class Lexer {
     protected static SymbolTable symbols_l2 = new SymbolTable(512);
 
     protected int          features       = 0; //SQLParserFeature.of(SQLParserFeature.EnableSQLBinaryOpExprGroup);
+    /**
+     * 保存目前的整个SQL语句
+     */
     public    final String text;
+    /**
+     * 当前处理位置，从0开始
+     */
     protected int          pos;
+    /**
+     * 当前处理词的开始位置
+     */
     protected int          mark;
-
+    /**
+     * 当前处理字符
+     */
     protected char         ch;
-
+    /**
+     * 当前缓存的处理词
+     */
     protected char[]       buf;
+    /**
+     * 用于取出词的标记，当前从text中取出的词应该为从mark位置开始，mark+bufPos结束的词
+     */
     protected int          bufPos;
-
+    /**
+     * 当前位于的关键词
+     */
     protected Token        token;
-
+    /**
+     * 所有关键词集合
+     */
     protected Keywords     keywods        = Keywords.DEFAULT_KEYWORDS;
-
+    /**
+     * 当前处理词
+     */
     protected String       stringVal;
-    protected long         hash_lower; // fnv1a_64
+    /**
+     * fnv1a_64
+     */
+    protected long         hash_lower; 
     protected long         hash;
 
+    /**
+     * 注释数量
+     */
     protected int            commentCount = 0;
+    /**
+     * 注释
+     */
     protected List<String>   comments     = null;
+    /**
+     * 是否跳过注释
+     */
     protected boolean        skipComment  = true;
+    /**
+     * 保存点
+     */
     private SavePoint        savePoint    = null;
 
     /*
      * anti sql injection
      */
     private boolean          allowComment = true;
+    /**
+     * 针对？表达式
+     */
     private int              varIndex     = -1;
+    /**
+     * 注释处理器
+     */
     protected CommentHandler commentHandler;
+    /**
+     * 是否注释结尾
+     */
     protected boolean        endOfComment = false;
+    /**
+     * 是否保留注释
+     */
     protected boolean        keepComments = false;
+    /**
+     * 当前处理行数
+     */
     protected int            line         = 0;
+    /**
+     * 总行数
+     */
     protected int            lines        = 0;
+    /**
+     * 数据库类型
+     */
     protected String         dbType;
 
     protected boolean        optimizedForParameterized = false;
 
+    /**
+     * 当前单词开始的位置
+     */
     private int startPos;
     private int posLine;
     private int posColumn;
@@ -248,6 +309,7 @@ public class Lexer {
     }
 
     /**
+     * 则返回了上一次解析的单词的 Token 类型
      * Return the current token, set by nextToken().
      */
     public final Token token() {
@@ -575,6 +637,9 @@ public class Lexer {
         nextToken();
     }
 
+    /**
+     * 第一个需求，只要被调用，它就按顺序从 SQL 语句的开头到结尾，解析出下一个单词
+     */
     public final void nextToken() {
         startPos = pos;
         bufPos = 0;
@@ -1903,6 +1968,8 @@ public class Lexer {
     }
 
     /**
+     * 如果 Token 类型是标识符（Identifier），Lexer 还提供了一个 stringVal() 方法，让使用者能拿到标识符的值。
+     * 
      * The value of a literal token, recorded as a string. For integers, leading 0x and 'l' suffixes are suppressed.
      */
     public final String stringVal() {

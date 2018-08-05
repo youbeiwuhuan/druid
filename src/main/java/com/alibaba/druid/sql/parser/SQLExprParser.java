@@ -16,7 +16,6 @@
 package com.alibaba.druid.sql.parser;
 
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

@@ -15,8 +15,6 @@
  */
 package com.alibaba.druid.sql.parser;
 
-import com.alibaba.druid.sql.SQLUtils;
-import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.druid.util.Utils;
 
 import java.util.Arrays;
@@ -24,17 +22,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 关键词集合
+ * 
  * @author wenshao [szujobs@hotmail.com]
  */
 public class Keywords {
 
-    private final Map<String, Token> keywords;
+    private final Map<String/*关键词名称*/, Token> keywords;
 
+    /**
+     * keywords的key的fnv1a_64编码
+     */
     private long[] hashArray;
     private Token[] tokens;
 
+    /**
+     * 默认关键词集合
+     */
     public final static Keywords     DEFAULT_KEYWORDS;
-
+    /**
+     * sqlite关键词集合
+     */
     public final static Keywords     SQLITE_KEYWORDS;
 
     static {

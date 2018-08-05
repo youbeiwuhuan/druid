@@ -16,6 +16,8 @@
 package com.alibaba.druid.sql.parser;
 
 /**
+ * 布局字符
+ * 
  * @author wenshao [szujobs@hotmail.com]
  */
 public interface LayoutCharacters {
@@ -26,11 +28,14 @@ public interface LayoutCharacters {
     final static int  TabInc = 8;
 
     /**
+     * Tab字符
+     * 
      * Tabulator character.
      */
     final static byte TAB    = 0x8;
 
     /**
+     * 换行字符
      * Line feed character.
      */
     final static byte LF     = 0xA;
